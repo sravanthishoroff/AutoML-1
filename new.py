@@ -1,6 +1,6 @@
 import streamlit as st
 
-import streamlit as st
+# import streamlit as st
 import pandas as pd
 import pandas_profiling as pp
 import time
@@ -11,9 +11,9 @@ import webbrowser
 
 import numpy as np
 from scikitplot.metrics import plot_confusion_matrix
-from textblob import TextBlob
+# from textblob import TextBlob
 import seaborn as sns
-from nlp import NLPNaive
+# from nlp import NLPNaive
 
 from sklearn import preprocessing
 
@@ -728,33 +728,36 @@ def app():
                         file_name="output.html"
                     )
             space()
-            st.markdown(
-                "<strong><h3 style='color: #424874'>Step3) Feature Selection</h3></strong>",
-                unsafe_allow_html=True)
-            X_label = st.multiselect("Select Text Column", data.columns)
-            text = X_label
-            print(text)
-            space()
-            target = st.selectbox("Select Target Column", data.columns)
-            print(target)
-            space()
-            print(type(text), type(target))
-            #
-            text.append(target)
-            # # Reassigning feature to DataFrame
-            data = data[text]
-            print(data)
+            try:
+                st.markdown(
+                    "<strong><h3 style='color: #424874'>Step3) Feature Selection</h3></strong>",
+                    unsafe_allow_html=True)
+                X_label = st.multiselect("Select Text Column", data.columns)
+                text = X_label
+                print(text)
+                space()
+                target = st.selectbox("Select Target Column", data.columns)
+                print(target)
+                space()
+                print(type(text), type(target))
+                #
+                text.append(target)
+                # # Reassigning feature to DataFrame
+                data = data[text]
+                print(data)
 
-            # # Droping NaN values
-            data = data.dropna()
+                # # Droping NaN values
+                data = data.dropna()
 
-            data[X_label].dropna()
-            x =data[X_label]
-            print(x)
+                data[X_label].dropna()
+                x =data[X_label]
+                print(x)
 
-            data[target].dropna()
-            y =data[target]
-            print(y)
+                data[target].dropna()
+                y =data[target]
+                print(y)
+            except Exception as e:
+                st.write(" Please Select valid Input and output feature for prediction: ", e) 
 
             st.markdown("<h4 style='color: #438a5e'>Final Dataset</h4>", unsafe_allow_html=True)
             st.dataframe(data.head())
@@ -781,20 +784,25 @@ def app():
 
         # Model Creation
         try:
-
-                if ML_model == 'Regression':
-                    if st.button("Analyze"):
-                        space()
+            
+            if ML_model == 'Regression':
+                if st.button("Analyze"):
+                    space()
+                    try:
                         if ML_algo_regression == 'linear regression':
                             linear_regression(x,y)
                         elif ML_algo_regression == 'decision tree regressor':
                             desicion_tree_regressor(x,y)
                         elif ML_algo_regression == 'Random Forest regressor':
                             random_forest_regressor(x,y)
+                    except Exception as e:
+                        st.warning(" Please Select valid Input and output features as per (regression/classification) for prediction")
 
-                elif ML_model == 'Classification':
-                    if st.button("Analyze"):
-                        space()
+
+            elif ML_model == 'Classification':
+                if st.button("Analyze"):
+                    space()
+                    try:
                         if ML_algo_classification == 'logistic regression':
                             logistic_regression(x,y)
                         elif ML_algo_classification == 'decision tree':
@@ -805,12 +813,11 @@ def app():
                             KNN(x,y)
                         elif ML_algo_classification == 'SVC':
                             SVC(x,y)
+                    except Exception as e:
+                        st.warning(" Please Select valid Input and output features as per (regression/classification) for prediction")
         except Exception as e:
-            print(" ERROR: ", e)
-
-
-
-
+            print("Error", e)
+        
 
 
 
