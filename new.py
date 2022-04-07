@@ -57,7 +57,13 @@ st.markdown("<strong><p style='color: #424874'>4.selecting algorithm</p></strong
             unsafe_allow_html=True)
 st.markdown("<strong><p style='color: #424874'>5.Model Evaluation</p></strong>",
             unsafe_allow_html=True)
+
 space()
+
+st.markdown("<strong><h2 style='color: #424874'>Download Dataset:-</h2></strong>",
+            unsafe_allow_html=True)
+st.write("bike sharing:-   (https://drive.google.com/file/d/1uW6yclHj0kfcXJ1vD-xGbvl-6RqquZoS/view?usp=sharing)")
+st.write("heart attack:- (https://drive.google.com/file/d/1hx4CXZG7V0Zb3m0SCEb1CejQhVdjhNqU/view?usp=sharing)")
 
 def app():
     def linear_regression(X, Y):
